@@ -1,18 +1,8 @@
-import { getGitInfo } from "Domain/git"
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useEffect } from "react"
 
 export default function App() {
-
-  useEffect(() => {
-    (
-      async () => {
-        await getGitInfo()
-      }
-    )()
-  }, []); 
-
   return (
     <View style={styles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
