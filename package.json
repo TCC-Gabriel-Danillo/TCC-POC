@@ -1,0 +1,13 @@
+{
+  "name": "TCC-POC",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/TCC-Gabriel-Danillo/TCC-POC.git",
+  "author": "GabrielDvPereira <gdavi.gd@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "firebase": "^9.9.3"
+  }
+}
