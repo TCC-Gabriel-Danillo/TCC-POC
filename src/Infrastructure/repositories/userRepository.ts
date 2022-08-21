@@ -1,22 +1,27 @@
-import { Position, User } from "../../Domain/entities/models";
-import { HttpRepository, UserRepository } from "../../Domain/repositories";
-import { getFirestore, setDoc, doc, Firestore  } from 'firebase/firestore';
+import { User } from "../../domain/entities/models";
+import { UserRepository } from "../../domain/repositories";
+import { getFirestore, setDoc, doc, Firestore, getDoc  } from 'firebase/firestore';
 
 
 export class UserRepositoryImp implements UserRepository {
     firestore: Firestore;
-    constructor(private http: HttpRepository){
+    constructor(){
         this.firestore = getFirestore()
     }
 
-    addUser(username: string, position: Position): Promise<void> {
-        throw new Error("Method not implemented.");
+    async addUser(user: User): Promise<void> {
+        await setDoc(doc(this.firestore, "users", user.username), user)
     }
-    getUser(id: number): Promise<User> {
-        throw new Error("Method not implemented.");
+    async getUser(username: string): Promise<User> {
+        const docRef = doc(this.firestore, "users", username);
+        const docSnap = await getDoc(docRef); 
+        return docSnap.data() as User
+
     }
-    listlUser(): Promise<User[]> {
-        throw new Error("Method not implemented.");
-    }
-    
+    async listlUser(): Promise<User[]> {
+        const docsRef = doc(this.firestore, "users");
+        const docsSnap = await getDoc(docsRef)
+        if(!docsSnap.exists()) return []
+        return docsSnap.data() as User[]
+    }  
 }
