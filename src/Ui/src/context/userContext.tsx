@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext } from "react"
+import { createContext, useState, useEffect } from "react"
 import { Position, User, UserUseCase } from "@domain/entities"
 import { GitUser } from "@infrastructure/dto"
 import { HttpRepository } from "@domain/repositories"
@@ -17,7 +17,7 @@ interface UserContextProps {
 
 }
 
-const UserContext = createContext<IUserContext>({} as IUserContext); 
+export const UserContext = createContext<IUserContext>({} as IUserContext); 
 
 export function UserContextProvider({ 
     children, 
@@ -49,4 +49,3 @@ export function UserContextProvider({
     )
 }
 
-export const useUserService = () => useContext(UserContext);
