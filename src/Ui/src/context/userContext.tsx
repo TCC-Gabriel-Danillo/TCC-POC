@@ -38,7 +38,7 @@ export function UserContextProvider({
     }, [])
 
     const addUser = async (username: string, position: Position) => {
-        const gitUsers = await httpRepository.get<GitUser>(`/gabrieldvpereira`); 
+        const gitUsers = await httpRepository.get<GitUser>(`/${username}`); 
         console.log(gitUsers); 
     }
 
