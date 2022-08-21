@@ -1,6 +1,6 @@
 import { User } from "../../domain/entities/models";
 import { UserRepository } from "../../domain/repositories";
-import { getFirestore, setDoc, doc, Firestore, getDoc  } from 'firebase/firestore';
+import { getFirestore, setDoc, doc, Firestore, getDoc, collection, query, getDocs  } from 'firebase/firestore';
 
 
 export class UserRepositoryImp implements UserRepository {
@@ -18,10 +18,18 @@ export class UserRepositoryImp implements UserRepository {
         return docSnap.data() as User
 
     }
-    async listlUser(): Promise<User[]> {
-        const docsRef = doc(this.firestore, "users");
-        const docsSnap = await getDoc(docsRef)
-        if(!docsSnap.exists()) return []
-        return docsSnap.data() as User[]
+    async listlUser(): Promise<Array<User>> {
+        const docsRef = query(collection(this.firestore, "users"));
+        const docsSnap = await getDocs(docsRef)
+        const users: Array<User> = []
+        
+        docsSnap.forEach(snap => {
+            const data = snap.data() as User
+            users.push(data)
+        })
+        
+        return users
     }  
+
+ 
 }

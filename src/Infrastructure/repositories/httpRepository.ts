@@ -1,5 +1,5 @@
 
-import { HttpRepository } from "../../Domain/repositories";
+import { HttpRepository } from "../../domain/repositories";
 import axios, { AxiosInstance } from "axios"; 
 
 
