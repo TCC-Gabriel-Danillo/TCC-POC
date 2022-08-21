@@ -2,17 +2,17 @@ const { getDefaultConfig } = require('expo/metro-config')
 const path = require('path')
 const config = getDefaultConfig(__dirname)
 
-const domainPath = __dirname + '/../Domain'
-const infraPath = __dirname + '/../Infrastructure'
+const domainPath = __dirname + '/../domain'
+const infraPath = __dirname + '/../infrastructure'
 
 const extraNodeModules = {
-  Domain: path.resolve(domainPath), 
-  Infrastructure: path.resolve(infraPath), 
+  domain: path.resolve(domainPath), 
+  infrastructure: path.resolve(infraPath), 
 }
 
 config.watchFolders = [
     path.resolve(domainPath), 
-    path.resolve(infraPath)
+    path.resolve(infraPath),
 ]
 
 config.resolver.extraNodeModules = new Proxy(extraNodeModules, {
@@ -21,5 +21,8 @@ config.resolver.extraNodeModules = new Proxy(extraNodeModules, {
       ? target[name]
       : path.join(process.cwd(), `node_modules/${name}`)
 })
+
+config.resolver.assetExts.push("cjs");
+
 
 module.exports = config
