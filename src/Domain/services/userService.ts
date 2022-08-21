@@ -1,4 +1,4 @@
-import { Position, User } from "../entities/models";
+import { User } from "../entities/models";
 import { UserUseCase } from "../entities/usecases";
 import { UserRepository } from "../repositories";
 
@@ -7,14 +7,14 @@ export class UserService implements UserUseCase {
         private userRepository:UserRepository, 
     ){}
         
-    getUser(id: number): Promise<User> {
-        return this.userRepository.getUser(id);
+    getUser(username: string): Promise<User> {
+        return this.userRepository.getUser(username);
     }
 
-    addUser(username: string, position: Position): Promise<void> {
+    addUser(user: User): Promise<void> {
          // https://api.github.com/users/gabrieldvpereira
          // https://api.github.com/users/GabrielDVpereira/repos
-        return this.userRepository.addUser(username, position); 
+        return this.userRepository.addUser(user); 
     }
 
     listUsers(): Promise<User[]> {

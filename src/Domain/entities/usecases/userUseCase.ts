@@ -1,7 +1,7 @@
 import { Position, User } from "../models"
 
 export interface UserUseCase {
-    getUser(id: number): Promise<User>
-    addUser(username: string, position: Position): Promise<void>
+    getUser(username: string): Promise<User>
+    addUser(user: User): Promise<void>
     listUsers(): Promise<Array<User>>
 }
