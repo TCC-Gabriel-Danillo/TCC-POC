@@ -1,22 +1,22 @@
-import 'dotenv/config'
-import './src/config/firebaseConfig'
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "./src/config/firebaseConfig"
+import { Routes } from "./src/navigation"
+import { UserContextProvider } from "./src/context"
+import {UserRepositoryImp, HttpRepositoryImp } from "@infrastructure/repositories"
+import { UserService } from "@domain/services"
 
 export default function App() {
+
+  const userRepository = new UserRepositoryImp(); 
+  const userService = new UserService(userRepository); 
+  const httpRepository = new HttpRepositoryImp("https://api.github.com/users"); 
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <UserContextProvider
+      userService={userService}
+      httpRepository={httpRepository}
+    >
+      <Routes />
+    </UserContextProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
