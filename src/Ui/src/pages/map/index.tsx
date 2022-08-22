@@ -1,10 +1,10 @@
 import * as React from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
-import { StyleSheet, Image, View, Dimensions } from 'react-native';
+import { Image, View } from 'react-native';
 import { useLocation, useUserService } from '../../hooks';
 import { Text } from '../../components';
-import { PRIMARY } from '../../constants';
 import makerImg from "../../../assets/marker.png"
+import { styles } from "./styles"
 
 export default function Map() {
   const location = useLocation()
@@ -53,27 +53,3 @@ export default function Map() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-  imageMarker: { 
-    width: 60, 
-    height: 60, 
-    resizeMode: "contain",
-    borderRadius: 50,
-    borderWidth: 5,
-    borderColor: PRIMARY
-  }, 
-  calloutView: { width: 250 }, 
-  calloutTitle: { marginLeft: 10, textAlign: "center" }, 
-  calloutContent: { fontSize: 12 }, 
-  calloutImage: { flexDirection: "row", alignItems: "center", marginBottom: 5 }
-});
