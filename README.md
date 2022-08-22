@@ -4,11 +4,10 @@
 
 Esse é um aplicativo destinado para comunidade de desenvolvedores encontrar outros desenvolvedores próximos. 
 
-![Simulator Screen Shot - iPhone 8 - 2022-08-22 at 11 36 30](https://user-images.githubusercontent.com/37307099/185948236-a6f2ffc1-dc3d-4e02-b3cf-d5f6665d2f22.png)
+<img src="assets/screen1.png" width="200px"/> 
+<img src="assets/screen2.png" width="200px"/> 
+<img src="assets/screen3.png" width="200px"/> 
 
-![Simulator Screen Shot - iPhone 8 - 2022-08-22 at 11 36 43](https://user-images.githubusercontent.com/37307099/185948335-b7b4a03a-710b-48f9-ac19-6a78c494615b.png)
-
-![Simulator Screen Shot - iPhone 8 - 2022-08-22 at 11 36 51](https://user-images.githubusercontent.com/37307099/185948355-efa8cead-68cc-4e06-b2dc-7df880632535.png)
 
 
 ### Requisitos
