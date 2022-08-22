@@ -23,5 +23,5 @@ export const styles = StyleSheet.create({
     calloutView: { width: 250 }, 
     calloutTitle: { marginLeft: 10, textAlign: "center" }, 
     calloutContent: { fontSize: 12 }, 
-    calloutImage: { flexDirection: "row", alignItems: "center", marginBottom: 5 }
+    calloutImage: { flexDirection: "row", alignItems: "center", marginBottom: 10 }
   });

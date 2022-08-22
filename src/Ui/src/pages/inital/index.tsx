@@ -6,7 +6,7 @@ import devImg from "../../../assets/dev.png"
 import { styles } from './style';
 import { WHITE } from '../../constants';
 import { useNavigation } from '@react-navigation/native';
-import { NavigationPages } from '../../navigation';
+import { NavigationPages } from '../../navigation/config';
 
 const InitialPage: React.FC = () => {
     const navigation = useNavigation()
