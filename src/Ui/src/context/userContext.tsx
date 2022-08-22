@@ -31,7 +31,6 @@ export function UserContextProvider({
        (
        async () => {
             const response = await userService.listUsers()
-            console.log(response)
             setUsers(response)
        }
        )()
