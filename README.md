@@ -4,16 +4,18 @@
 
 Esse é um aplicativo destinado para comunidade de desenvolvedores encontrar outros desenvolvedores próximos. 
 
-<img src="assets/screen1.png" width="200px"/> 
-<img src="assets/screen2.png" width="200px"/> 
-<img src="assets/screen3.png" width="200px"/> 
+<div style="display: flex; flex-direction: row; margin: 0 0 50px 0">
+  <img src="assets/screen1.png" width="200px" style="margin: 0 5px"/> 
+  <img src="assets/screen2.png" width="200px" style="margin: 0 5px"/> 
+  <img src="assets/screen3.png" width="200px" style="margin: 0 5px"/> 
+</div>
 
 
 
 ### Requisitos
 
 - Instalar o expo local e em seu smatphone [Expo](https://expo.dev/)
-- Configurar um projeto no [firebase](https://firebase.google.com/) e obter configuraça. 
+- Configurar um projeto no [firebase](https://firebase.google.com/) 
 
 ### Configucação
 
