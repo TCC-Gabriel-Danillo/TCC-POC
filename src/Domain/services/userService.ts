@@ -12,8 +12,6 @@ export class UserService implements UserUseCase {
     }
 
     addUser(user: User): Promise<void> {
-         // https://api.github.com/users/gabrieldvpereira
-         // https://api.github.com/users/GabrielDVpereira/repos
         return this.userRepository.addUser(user); 
     }
 

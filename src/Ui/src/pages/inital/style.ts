@@ -12,5 +12,5 @@ export const styles = StyleSheet.create({
     button: {
         marginTop: 10
     }, 
-    subtitle: {textAlign: "center"}
+    subtitle: { textAlign: "center", marginTop: 10 }
 })

@@ -1,4 +1,4 @@
-import { User, Position } from "../entities/models";
+import { User } from "../entities/models";
 
 export interface UserRepository {
     addUser(user: User): Promise<void>

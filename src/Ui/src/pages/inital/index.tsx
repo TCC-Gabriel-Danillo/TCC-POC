@@ -15,14 +15,8 @@ const InitialPage: React.FC = () => {
     const [username, setUsername] = useState(''); 
     
     const handleButtonPress = async () => {
-      try {
-        await addUser(username, position)
-        navigation.navigate(NavigationPages.map)
-      } catch(error){
-        if(error instanceof Error)
-          Alert.alert(error.message)
-      }
-
+        const isUserAdded  = await addUser(username, position)
+        if(isUserAdded) navigation.navigate(NavigationPages.map)
     }
 
   return(

@@ -17,7 +17,6 @@ export function LocationContextProvider({ children }:Props){
           if (status !== 'granted') return;
 
           const location = await Location.getCurrentPositionAsync({});
-          console.log(location)
           setPosition({
                 latitude: location.coords.latitude, 
                 longitude: location.coords.longitude

@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react"
+import { Alert } from "react-native"
 import { Position, User, UserUseCase } from "@domain/entities"
 import { GitRepository, GitUser } from "@infrastructure/dto"
 import { HttpRepository } from "@domain/repositories"
@@ -7,7 +8,7 @@ import { HttpRepository } from "@domain/repositories"
 interface IUserContext {
     users: Array<User>,
     isLoading: boolean, 
-    addUser: (username: string, position: Position) => Promise<void>
+    addUser: (username: string, position: Position) => Promise<boolean>
 }
 
 interface UserContextProps {
@@ -31,12 +32,14 @@ export function UserContextProvider({
        (
        async () => {
             const response = await userService.listUsers()
+            console.log(response)
             setUsers(response)
        }
        )()
     }, [])
 
-    const addUser = async (username: string, position: Position) => {
+    const addUser = async (username: string, position: Position): Promise<boolean> => {
+        try{
             setIsLoadig(true)
 
             const promises = [
@@ -48,8 +51,6 @@ export function UserContextProvider({
             
             const user  = responseUser as unknown as GitUser
             const userRepos = responseRepos as unknown as Array<GitRepository>
-
-            if(!userRepos?.length) return
 
             const techs: Array<string> = []
 
@@ -72,6 +73,12 @@ export function UserContextProvider({
             await userService.addUser(newUser)
 
             setIsLoadig(false)
+            return true
+        } catch(error) {
+            setIsLoadig(false)
+            if(error instanceof Error) Alert.alert(error.message)
+            return false
+        }
     }
 
     return (
