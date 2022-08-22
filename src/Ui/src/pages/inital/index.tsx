@@ -1,17 +1,28 @@
 import { useState } from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, ActivityIndicator, Alert } from 'react-native';
 import { useUserService, useLocation } from '../../hooks';
 import { Text, Input, Button } from "../../components"
 import devImg from "../../../assets/dev.png"
 import { styles } from './style';
+import { WHITE } from '../../constants';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationPages } from '../../navigation';
 
 const InitialPage: React.FC = () => {
-    const { addUser } = useUserService()
+    const navigation = useNavigation()
+    const { addUser, isLoading } = useUserService()
     const position = useLocation()
     const [username, setUsername] = useState(''); 
     
-    const handleButtonPress = () => {
-      addUser(username, position)
+    const handleButtonPress = async () => {
+      try {
+        await addUser(username, position)
+        navigation.navigate(NavigationPages.map)
+      } catch(error){
+        if(error instanceof Error)
+          Alert.alert(error.message)
+      }
+
     }
 
   return(
@@ -22,7 +33,9 @@ const InitialPage: React.FC = () => {
         <Image source={devImg} style={{width: 300, height: 300, resizeMode: "contain"}} />
         
         <Input onChange={(value) => setUsername(value)} placeholder='Seu Usuário no Github'/>
-        <Button onPress={handleButtonPress} style={styles.button}>Entrar</Button>
+        <Button onPress={handleButtonPress} style={styles.button}>  
+          {isLoading ? <ActivityIndicator color={WHITE}/> : "Entrar"}
+        </Button>
     </View>
   )
 }

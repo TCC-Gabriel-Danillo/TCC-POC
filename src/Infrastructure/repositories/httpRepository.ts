@@ -1,6 +1,7 @@
 
 import { HttpRepository } from "../../domain/repositories";
-import axios, { AxiosInstance } from "axios"; 
+import axios, { AxiosInstance, AxiosError } from "axios"; 
+import { NotFoundError, ServerError } from "../erros/http"
 
 
 const headers = {
@@ -15,20 +16,15 @@ export class HttpRepositoryImp implements HttpRepository {
             headers
         })
     }
-    async get <T>(endpoint: string, params?: Record<string, any>, config?: any) {
-        const response = await this.api.get(endpoint, { ...config, params });
-        return response.data as T;
-    }
-    async post <T>(endpoint: string, params?: Record<string, any>, config?: any) {
-        const response = await this.api.post(endpoint, { ...params }, { ...config });
-        return response.data as T;
-    }
-   async put <T>(endpoint: string, params?: Record<string, any>, config?: any) {
-        const response = await this.api.put(endpoint, { ...params }, { ...config });
-        return response.data as T;
-    }
-    async delete <T>(endpoint: string, params?: any, config?: any) {
-        const response = await this.api.delete(endpoint, { ...config, params });
-        return response.data as T;
+    async get <T>(endpoint: string, params?: Record<string, any>, config?: any): Promise<T | undefined> {
+        try {
+            const response = await this.api.get(endpoint, { ...config, params });
+            return response.data as T;
+        } catch(error){
+            if( error instanceof AxiosError){
+                if(error.response?.status == 404) throw new NotFoundError()
+                if(error.response?.status == 500) throw new ServerError()
+            }
+        }
     }
 }

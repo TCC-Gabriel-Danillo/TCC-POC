@@ -5,7 +5,8 @@ export type Position = {
 
 export interface User {
     id: number; 
-    username: string; 
+    username: string;
+    phoroUrl?: string 
     email?: string; 
     techs?: Array<string>
     position: Position
