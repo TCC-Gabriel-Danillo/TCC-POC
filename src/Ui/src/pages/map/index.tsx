@@ -1,14 +1,21 @@
 import * as React from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
-import { Image, View } from 'react-native';
+import { Alert, Image, View } from 'react-native';
 import { useLocation, useUserService } from '../../hooks';
 import { Text } from '../../components';
 import makerImg from "../../../assets/marker.png"
 import { styles } from "./styles"
+import { User } from '@domain/entities';
+import * as Linking from 'expo-linking';
+
 
 export default function Map() {
   const location = useLocation()
   const { users } = useUserService()
+
+  const handleCalloutPress = async (user: User) => {
+     await Linking.openURL(user.profileUrl);
+  }
 
 
   return (
@@ -33,7 +40,7 @@ export default function Map() {
                 image={makerImg}
               >
 
-                <Callout>
+                <Callout onPress={() => handleCalloutPress(user)}>
                   <View style={styles.calloutView}>
                     <View style={styles.calloutImage}>
                       <Image source={{uri: user.phoroUrl}} style={styles.imageMarker}/>

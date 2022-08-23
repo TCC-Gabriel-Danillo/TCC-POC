@@ -38,7 +38,7 @@ export function UserContextProvider({
     }, [])
 
     const addUser = async (username: string, position: Position): Promise<boolean> => {
-        try{
+        try {
             setIsLoadig(true)
 
             const promises = [
@@ -66,7 +66,8 @@ export function UserContextProvider({
                 phoroUrl: user.avatar_url, 
                 techs: techs, 
                 position: position, 
-                username: user.login
+                username: user.login, 
+                profileUrl: user.html_url
             }
 
             await userService.addUser(newUser)

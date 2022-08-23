@@ -1,4 +1,4 @@
-import { Position, User } from "../models"
+import { User } from "../models"
 
 export interface UserUseCase {
     getUser(username: string): Promise<User>
