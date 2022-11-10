@@ -1,6 +1,6 @@
 import * as React from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
-import { Alert, Image, View } from 'react-native';
+import { Image, View } from 'react-native';
 import { useLocation, useUserService } from '../../hooks';
 import { Text } from '../../components';
 import makerImg from "../../../assets/marker.png"

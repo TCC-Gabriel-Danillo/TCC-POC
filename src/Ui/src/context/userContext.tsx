@@ -8,8 +8,9 @@ import { HttpRepository } from "@domain/repositories"
 interface IUserContext {
     users: Array<User>,
     isLoading: boolean, 
+    getUser: (username: string) => Promise<User|undefined>
     addUser: (username: string, position: Position) => Promise<boolean>
-    updateUserPosition:(username: string, position: Position) => Promise<void>
+    updateUser:(username: string, position: Position) => Promise<boolean>
 }
 
 interface UserContextProps {
@@ -27,16 +28,16 @@ export function UserContextProvider({
     
     const [users, setUsers] = useState<Array<User>>([]);
     const [isLoading, setIsLoadig] = useState(false); 
-    
-    useEffect(() => {
-       (
-       async () => {
-            const response = await userService.listUsers()
-            setUsers(response)
-       }
-       )()
-    }, [])
-    
+      
+    const getUser = async (username: string): Promise<User|undefined> => {
+        try {
+            const user = await userService.getUser(username);
+            return user
+        } catch (error) {
+            if(error instanceof Error) Alert.alert(error.message)
+        }
+    }
+
     const addUser = async (username: string, position: Position): Promise<boolean> => {
         try {
             setIsLoadig(true)
@@ -73,6 +74,7 @@ export function UserContextProvider({
             await userService.addUser(newUser)
 
             setIsLoadig(false)
+            await listUsers()
             return true
         } catch(error) {
             setIsLoadig(false)
@@ -81,12 +83,24 @@ export function UserContextProvider({
         }
     }
 
-    const updateUserPosition = async (username: string, position: Position) => {
-        await userService.updateUser(username, position);
+    const updateUser = async (username: string, position: Position) => {
+        try {
+            await userService.updateUser(username, position)
+            await listUsers()
+            return true;
+        } catch (error) {
+            if(error instanceof Error) Alert.alert(error.message)
+            return false;
+        }
+    }
+
+    const listUsers = async () => {
+        const response = await userService.listUsers()
+        setUsers(response)
     }
 
     return (
-        <UserContext.Provider value={{ users, isLoading, addUser, updateUserPosition}}>
+        <UserContext.Provider value={{ users, isLoading, addUser, updateUser, getUser}}>
             {children}
         </UserContext.Provider>
     )
