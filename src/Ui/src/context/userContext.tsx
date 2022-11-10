@@ -9,13 +9,13 @@ interface IUserContext {
     users: Array<User>,
     isLoading: boolean, 
     addUser: (username: string, position: Position) => Promise<boolean>
+    updateUserPosition:(username: string, position: Position) => Promise<void>
 }
 
 interface UserContextProps {
     children: JSX.Element
     userService: UserUseCase
     httpRepository: HttpRepository
-
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext); 
@@ -36,7 +36,7 @@ export function UserContextProvider({
        }
        )()
     }, [])
-
+    
     const addUser = async (username: string, position: Position): Promise<boolean> => {
         try {
             setIsLoadig(true)
@@ -81,8 +81,12 @@ export function UserContextProvider({
         }
     }
 
+    const updateUserPosition = async (username: string, position: Position) => {
+        await userService.updateUser(username, position);
+    }
+
     return (
-        <UserContext.Provider value={{ users, isLoading, addUser }}>
+        <UserContext.Provider value={{ users, isLoading, addUser, updateUserPosition}}>
             {children}
         </UserContext.Provider>
     )

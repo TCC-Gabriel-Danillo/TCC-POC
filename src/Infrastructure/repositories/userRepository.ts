@@ -1,6 +1,6 @@
-import { User } from "../../domain/entities/models";
+import { Position, User } from "../../domain/entities/models";
 import { UserRepository } from "../../domain/repositories";
-import { getFirestore, setDoc, doc, Firestore, getDoc, collection, query, getDocs  } from 'firebase/firestore';
+import { getFirestore, setDoc, updateDoc, doc, Firestore, getDoc, collection, query, getDocs } from 'firebase/firestore';
 
 
 export class UserRepositoryImp implements UserRepository {
@@ -12,12 +12,18 @@ export class UserRepositoryImp implements UserRepository {
     async addUser(user: User): Promise<void> {
         await setDoc(doc(this.firestore, "users", user.username), user)
     }
+
+    async updateUser(username:string, userPosition: Position): Promise<void> {
+        await updateDoc(doc(this.firestore, 'users', username), userPosition)
+    }
+
     async getUser(username: string): Promise<User> {
         const docRef = doc(this.firestore, "users", username);
         const docSnap = await getDoc(docRef); 
         return docSnap.data() as User
 
     }
+
     async listlUser(): Promise<Array<User>> {
         const docsRef = query(collection(this.firestore, "users"));
         const docsSnap = await getDocs(docsRef)

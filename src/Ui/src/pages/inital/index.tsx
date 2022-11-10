@@ -10,12 +10,13 @@ import { NavigationPages } from '../../navigation/config';
 
 const InitialPage: React.FC = () => {
     const navigation = useNavigation()
-    const { addUser, isLoading } = useUserService()
+    const { addUser, isLoading, updateUserPosition } = useUserService()
     const position = useLocation()
     const [username, setUsername] = useState(''); 
     
     const handleButtonPress = async () => {
         const isUserAdded  = await addUser(username, position)
+        updateUserPosition(username, position)
         if(isUserAdded) navigation.navigate(NavigationPages.map)
     }
 
