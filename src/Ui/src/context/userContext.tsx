@@ -1,21 +1,20 @@
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState } from "react"
 import { Alert } from "react-native"
-import { Position, User, UserUseCase } from "@domain/entities"
+import { ListUserParams, Position, User, UserUseCase } from "@domain/entities"
 import { GitRepository, GitUser } from "@infrastructure/dto"
 import { HttpRepository } from "@domain/repositories"
-
+import { geohashForLocation } from "geofire-common";
 
 interface IUserContext {
-    users: Array<User>,
     isLoading: boolean, 
     addUser: (username: string, position: Position) => Promise<boolean>
+    listUsers: (listUserParams: ListUserParams) => Promise<User[]>
 }
 
 interface UserContextProps {
     children: JSX.Element
     userService: UserUseCase
     httpRepository: HttpRepository
-
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext); 
@@ -25,18 +24,8 @@ export function UserContextProvider({
     userService, 
     httpRepository }: UserContextProps){
     
-    const [users, setUsers] = useState<Array<User>>([]);
     const [isLoading, setIsLoadig] = useState(false); 
     
-    useEffect(() => {
-       (
-       async () => {
-            const response = await userService.listUsers()
-            setUsers(response)
-       }
-       )()
-    }, [])
-
     const addUser = async (username: string, position: Position): Promise<boolean> => {
         try {
             setIsLoadig(true)
@@ -67,7 +56,8 @@ export function UserContextProvider({
                 techs: techs, 
                 position: position, 
                 username: user.login, 
-                profileUrl: user.html_url
+                profileUrl: user.html_url,
+                geohash: geohashForLocation([position.latitude, position.longitude])
             }
 
             await userService.addUser(newUser)
@@ -81,8 +71,15 @@ export function UserContextProvider({
         }
     }
 
+    const listUsers = async (listUserParams: ListUserParams) => {
+        console.log('adfsfadsf');
+        
+        const response = await userService.listUsers(listUserParams)
+        return response;
+    };
+
     return (
-        <UserContext.Provider value={{ users, isLoading, addUser }}>
+        <UserContext.Provider value={{ listUsers, isLoading, addUser }}>
             {children}
         </UserContext.Provider>
     )
