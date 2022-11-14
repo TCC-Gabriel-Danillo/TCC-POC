@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import MapView, { Marker, Callout } from 'react-native-maps';
-import { Alert, Image, View } from 'react-native';
-import { useLocation, useUserService } from '../../hooks';
+import { Image, View } from 'react-native';
+import { useLocation, useUserService, useGeohash } from '../../hooks';
 import { Text } from '../../components';
 import makerImg from "../../../assets/marker.png"
 import { styles } from "./styles"
@@ -10,9 +10,10 @@ import * as Linking from 'expo-linking';
 
 
 export default function Map() {
-  const location = useLocation()
-  const { users } = useUserService()
-
+  const position = useLocation()
+  const { listUsers } = useUserService()
+  const {users} = useGeohash({position, callback: listUsers})
+  
   const handleCalloutPress = async (user: User) => {
      await Linking.openURL(user.profileUrl);
   }
@@ -22,8 +23,8 @@ export default function Map() {
     <View style={styles.container}>
       <MapView style={styles.map}
         initialRegion={{
-          latitude: location.latitude, 
-          longitude: location.longitude, 
+          latitude: position.latitude, 
+          longitude: position.longitude, 
           latitudeDelta: 0.05, 
           longitudeDelta: 0.05,
         }}
