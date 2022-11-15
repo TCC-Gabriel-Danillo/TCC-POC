@@ -25,7 +25,7 @@ export const useGeohash = ({position, callback}: useGeohashType) => {
       setUsers(response)
     })
       
-  },[])
+  },[position])
 
   const getHashes = (position: Position) => {
     const {latitude, longitude} = position
