@@ -3,7 +3,6 @@ import { Alert } from "react-native"
 import { ListUserParams, Position, User, UserUseCase } from "@domain/entities"
 import { GitRepository, GitUser } from "@infrastructure/dto"
 import { HttpRepository } from "@domain/repositories"
-import { geohashForLocation } from "geofire-common";
 
 interface IUserContext {
     isLoading: boolean, 
@@ -15,6 +14,7 @@ interface UserContextProps {
     children: JSX.Element
     userService: UserUseCase
     httpRepository: HttpRepository
+    geohashGeneratorHelper: Function
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext); 
@@ -22,7 +22,8 @@ export const UserContext = createContext<IUserContext>({} as IUserContext);
 export function UserContextProvider({ 
     children, 
     userService, 
-    httpRepository }: UserContextProps){
+    httpRepository,
+    geohashForLocation }: UserContextProps){
     
     const [isLoading, setIsLoadig] = useState(false); 
     
@@ -72,8 +73,6 @@ export function UserContextProvider({
     }
 
     const listUsers = async (listUserParams: ListUserParams) => {
-        console.log('adfsfadsf');
-        
         const response = await userService.listUsers(listUserParams)
         return response;
     };
