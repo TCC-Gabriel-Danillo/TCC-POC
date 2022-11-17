@@ -1,15 +1,15 @@
-import {geohashQueryBounds} from "geofire-common";
+import { geohashQueryBounds } from "geofire-common";
 import { ListUserParams, Position, User } from "@domain/entities";
 import { useEffect, useState } from "react";
 
 const RADIUS_IN_METERS = 10000
 
-type useGeohashType = {
+type useFilterUsersType = {
   position?: Position,
   callback: (listUserParams: ListUserParams) => Promise<User[]>
 }
 
-export const useGeohash = ({position, callback}: useGeohashType) => {
+export const useFilterUsers = ({position, callback}: useFilterUsersType) => {
   
   const [users, setUsers] = useState<User[]>([])
   
@@ -17,7 +17,7 @@ export const useGeohash = ({position, callback}: useGeohashType) => {
     let listUserParams: ListUserParams;
 
     if(position) {
-      const {start, end} = getHashes(position);
+      const {start, end} = getGeohashes(position);
       listUserParams = { start, end, type: 'geohash' }
     }    
     
@@ -27,7 +27,7 @@ export const useGeohash = ({position, callback}: useGeohashType) => {
       
   },[position])
 
-  const getHashes = (position: Position) => {
+  const getGeohashes = (position: Position) => {
     const {latitude, longitude} = position
     const bounds = geohashQueryBounds([latitude, longitude],RADIUS_IN_METERS)
 
